@@ -1,23 +1,15 @@
 const File = require('../models/File')
 const express = require('express')
 const router = new express.Router()
-const multer = require('multer');
+const upload = require('../middleware/storage')
 
-const storage = multer.diskStorage({
-    destination: (req, file, callBack) => {
-        callBack(null, 'uploads')
-    },
-    filename: (req, file, callBack) => {
-        callBack(null, `FunOfHeuristic_${file.originalname}`)
-    }
-})
-
-const upload = multer({ storage: storage })
 
 router.post('/', upload.single('file'), async (req, res, next) => {
+
+    console.log(req.file)
     const file = new File({
         title: req.file.originalname,
-        path: req.file.path,
+        path: "http://localhost:4000/" + req.file.path,
         createdAt: new Date()
     })
     await file.save()

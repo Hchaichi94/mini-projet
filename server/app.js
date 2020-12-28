@@ -9,8 +9,7 @@ app.use(cors({ origin: "*" }));
 app.use(bodyParser.json());
 
 
-app.set('uploads', path.join(__dirname, 'uploads'));
-
+app.use('/uploads', express.static(path.join('uploads')));
 
 //routes
 app.use('/file', require('./routes/fileRoute'));
